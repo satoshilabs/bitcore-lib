@@ -10,14 +10,16 @@
 /* jshint maxstatements: 100 */
 /* jshint unused: false */
 
-var _ = require('lodash');
-var should = require('chai').should();
 var expect = require('chai').expect;
+var should = require('chai').should();
 var sinon = require('sinon');
-var bitcore = require('..');
-var Networks = bitcore.Networks;
-var HDPrivateKey = bitcore.HDPrivateKey;
-var HDPublicKey = bitcore.HDPublicKey;
+
+var btcLib = require('..');
+var Constants = require('../lib/common/constants');
+var HDPrivateKey = btcLib.HDPrivateKey;
+var HDPublicKey = btcLib.HDPublicKey;
+var Networks = btcLib.Networks;
+var _ = require('lodash');
 
 describe('HDKeys building with static methods', function() {
   var classes = [HDPublicKey, HDPrivateKey];
@@ -227,7 +229,7 @@ describe('BIP32 compliance', function() {
     var privateKeyBuffer = new Buffer('00000055378cf5fafb56c711c674143f9b0ee82ab0ba2924f19b64f5ae7cdbfd', 'hex');
     var chainCodeBuffer = new Buffer('9c8a5c863e5941f3d99453e6ba66b328bb17cf0b8dec89ed4fc5ace397a1c089', 'hex');
     var key = HDPrivateKey.fromObject({
-      network: 'testnet',
+      network: Constants.TESTNET,
       depth: 0,
       parentFingerPrint: 0,
       childIndex: 0,
@@ -243,7 +245,7 @@ describe('BIP32 compliance', function() {
     var privateKeyBuffer = new Buffer('00000055378cf5fafb56c711c674143f9b0ee82ab0ba2924f19b64f5ae7cdbfd', 'hex');
     var chainCodeBuffer = new Buffer('9c8a5c863e5941f3d99453e6ba66b328bb17cf0b8dec89ed4fc5ace397a1c089', 'hex');
     var key = HDPrivateKey.fromObject({
-      network: 'testnet',
+      network: Constants.TESTNET,
       depth: 0,
       parentFingerPrint: 0,
       childIndex: 0,
@@ -259,7 +261,7 @@ describe('BIP32 compliance', function() {
     var privateKeyBuffer = new Buffer('00000055378cf5fafb56c711c674143f9b0ee82ab0ba2924f19b64f5ae7cdbfd', 'hex');
     var chainCodeBuffer = new Buffer('9c8a5c863e5941f3d99453e6ba66b328bb17cf0b8dec89ed4fc5ace397a1c089', 'hex');
     var key = HDPrivateKey.fromObject({
-      network: 'testnet',
+      network: Constants.TESTNET,
       depth: 0,
       parentFingerPrint: 0,
       childIndex: 0,
@@ -279,9 +281,9 @@ describe('BIP32 compliance', function() {
       var invalid = new Buffer('0000000000000000000000000000000000000000000000000000000000000000', 'hex');
       var privateKeyBuffer = new Buffer('5f72914c48581fc7ddeb944a9616389200a9560177d24f458258e5b04527bcd1', 'hex');
       var chainCodeBuffer = new Buffer('39816057bba9d952fe87fe998b7fd4d690a1bb58c2ff69141469e4d1dffb4b91', 'hex');
-      var unstubbed = bitcore.crypto.BN.prototype.toBuffer;
+      var unstubbed = btcLib.crypto.BN.prototype.toBuffer;
       var count = 0;
-      var stub = sandbox.stub(bitcore.crypto.BN.prototype, 'toBuffer', function(args) {
+      var stub = sandbox.stub(btcLib.crypto.BN.prototype, 'toBuffer', function(args) {
         // On the fourth call to the function give back an invalid private key
         // otherwise use the normal behavior.
         count++;
@@ -291,9 +293,9 @@ describe('BIP32 compliance', function() {
         var ret = unstubbed.apply(this, arguments);
         return ret;
       });
-      sandbox.spy(bitcore.PrivateKey, 'isValid');
+      sandbox.spy(btcLib.PrivateKey, 'isValid');
       var key = HDPrivateKey.fromObject({
-        network: 'testnet',
+        network: Constants.TESTNET,
         depth: 0,
         parentFingerPrint: 0,
         childIndex: 0,
@@ -302,22 +304,22 @@ describe('BIP32 compliance', function() {
       });
       var derived = key.derive("m/44'");
       derived.privateKey.toString().should.equal('b15bce3608d607ee3a49069197732c656bca942ee59f3e29b4d56914c1de6825');
-      bitcore.PrivateKey.isValid.callCount.should.equal(2);
+      btcLib.PrivateKey.isValid.callCount.should.equal(2);
     });
     it('will handle edge case that a derive public key is invalid', function() {
       var publicKeyBuffer = new Buffer('029e58b241790284ef56502667b15157b3fc58c567f044ddc35653860f9455d099', 'hex');
       var chainCodeBuffer = new Buffer('39816057bba9d952fe87fe998b7fd4d690a1bb58c2ff69141469e4d1dffb4b91', 'hex');
       var key = new HDPublicKey({
-        network: 'testnet',
+        network: Constants.TESTNET,
         depth: 0,
         parentFingerPrint: 0,
         childIndex: 0,
         chainCode: chainCodeBuffer,
         publicKey: publicKeyBuffer
       });
-      var unstubbed = bitcore.PublicKey.fromPoint;
-      bitcore.PublicKey.fromPoint = function() {
-        bitcore.PublicKey.fromPoint = unstubbed;
+      var unstubbed = btcLib.PublicKey.fromPoint;
+      btcLib.PublicKey.fromPoint = function() {
+        btcLib.PublicKey.fromPoint = unstubbed;
         throw new Error('Point cannot be equal to Infinity');
       };
       sandbox.spy(key, '_deriveWithNumber');

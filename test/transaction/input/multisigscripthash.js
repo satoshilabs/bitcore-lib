@@ -1,17 +1,18 @@
 'use strict';
 /* jshint unused: false */
 
-var should = require('chai').should();
 var expect = require('chai').expect;
-var _ = require('lodash');
+var should = require('chai').should();
 
-var bitcore = require('../../..');
-var Transaction = bitcore.Transaction;
-var PrivateKey = bitcore.PrivateKey;
-var Address = bitcore.Address;
-var Script = bitcore.Script;
-var Signature = bitcore.crypto.Signature;
-var MultiSigScriptHashInput = bitcore.Transaction.Input.MultiSigScriptHash;
+var btcLib = require('../../..');
+var Address = btcLib.Address;
+var Constants = require('../../../lib/common/constants');
+var PrivateKey = btcLib.PrivateKey;
+var MultiSigScriptHashInput = btcLib.Transaction.Input.MultiSigScriptHash;
+var Script = btcLib.Script;
+var Signature = btcLib.crypto.Signature;
+var Transaction = btcLib.Transaction;
+var _ = require('lodash');
 
 describe('MultiSigScriptHashInput', function() {
 
@@ -54,14 +55,14 @@ describe('MultiSigScriptHashInput', function() {
       .to(address, 1000000);
     var input = transaction.inputs[0];
 
-    _.all(input.publicKeysWithoutSignature(), function(publicKeyMissing) {
+    _.every(input.publicKeysWithoutSignature(), function(publicKeyMissing) {
       var serialized = publicKeyMissing.toString();
       return serialized === public1.toString() ||
               serialized === public2.toString() ||
               serialized === public3.toString();
     }).should.equal(true);
     transaction.sign(privateKey1);
-    _.all(input.publicKeysWithoutSignature(), function(publicKeyMissing) {
+    _.every(input.publicKeysWithoutSignature(), function(publicKeyMissing) {
       var serialized = publicKeyMissing.toString();
       return serialized === public2.toString() ||
               serialized === public3.toString();
@@ -112,7 +113,7 @@ describe('MultiSigScriptHashInput', function() {
     roundtrip.toObject().should.deep.equal(input.toObject());
   });
   it('will get the scriptCode for nested witness', function() {
-    var address = Address.createMultisig([public1, public2, public3], 2, 'testnet', true);
+    var address = Address.createMultisig([public1, public2, public3], 2, Constants.TESTNET, true);
     var utxo = {
       address: address.toString(),
       txId: '66e64ef8a3b384164b78453fa8c8194de9a473ba14f89485a0e433699daec140',
@@ -128,7 +129,7 @@ describe('MultiSigScriptHashInput', function() {
     scriptCode.toString('hex').should.equal('695221025c95ec627038e85b5688a9b3d84d28c5ebe66e8c8d697d498e20fe96e3b1ab1d2102cdddfc974d41a62f1f80081deee70592feb7d6e6cf6739d6592edbe7946720e72103c95924e02c240b5545089c69c6432447412b58be43fd671918bd184a5009834353ae');
   });
   it('will get the satoshis buffer for nested witness', function() {
-    var address = Address.createMultisig([public1, public2, public3], 2, 'testnet', true);
+    var address = Address.createMultisig([public1, public2, public3], 2, Constants.TESTNET, true);
     var utxo = {
       address: address.toString(),
       txId: '66e64ef8a3b384164b78453fa8c8194de9a473ba14f89485a0e433699daec140',

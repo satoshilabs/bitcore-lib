@@ -1,10 +1,10 @@
-# Bitcore v0.14
+# BtcLib v0.0.1
 
 ## Principles
 
-Bitcoin is a powerful new peer-to-peer platform for the next generation of financial technology. The decentralized nature of the Bitcoin network allows for highly resilient bitcoin infrastructure, and the developer community needs reliable, open-source tools to implement bitcoin apps and services. Bitcore provides a reliable API for JavaScript apps that need to interface with Bitcoin.
+Bitcoin is a powerful new peer-to-peer platform for the next generation of financial technology. The decentralized nature of the Bitcoin network allows for highly resilient bitcoin infrastructure, and the developer community needs reliable, open-source tools to implement bitcoin apps and services. BtcLib provides a reliable API for JavaScript apps that need to interface with Bitcoin.
 
-To get started, just `npm install bitcore` or `bower install bitcore`.
+To get started, just `npm install btc` or `bower install btc`.
 
 # Documentation Index
 
@@ -35,25 +35,25 @@ To get started, just `npm install bitcore` or `bower install bitcore`.
 
 Some functionality is implemented as a module that can be installed separately:
 
-* [Payment Protocol Support](https://github.com/bitpay/bitcore-payment-protocol)
-* [Peer to Peer Networking](https://github.com/bitpay/bitcore-p2p)
-* [Bitcoin Core JSON-RPC](https://github.com/bitpay/bitcoind-rpc)
-* [Payment Channels](https://github.com/bitpay/bitcore-channel)
-* [Mnemonics](https://github.com/bitpay/bitcore-mnemonic)
-* [Elliptical Curve Integrated Encryption Scheme](https://github.com/bitpay/bitcore-ecies)
-* [Blockchain Explorers](https://github.com/bitpay/bitcore-explorers)
-* [Signed Messages](https://github.com/bitpay/bitcore-message)
+* [Payment Protocol Support](https://github.com/owstack/btc-payment-protocol)
+* [Peer to Peer Networking](https://github.com/owstack/btc-p2p)
+* [Bitcoin Core JSON-RPC](https://github.com/owstack/bitcoind-rpc)
+* [Payment Channels](https://github.com/owstack/btc-channel)
+* [Mnemonics](https://github.com/owstack/btc-mnemonic)
+* [Elliptical Curve Integrated Encryption Scheme](https://github.com/owstack/btc-ecies)
+* [Blockchain Explorers](https://github.com/owstack/btc-explorers)
+* [Signed Messages](https://github.com/owstack/btc-message)
 
 # Examples
 
 ## Create and Save a Private Key
 
 ```javascript
-var privateKey = new bitcore.PrivateKey();
+var privateKey = new btc.PrivateKey();
 
 var exported = privateKey.toWIF();
 // e.g. L3T1s1TYP9oyhHpXgkyLoJFGniEgkv2Jhi138d7R2yJ9F4QdDU2m
-var imported = bitcore.PrivateKey.fromWIF(exported);
+var imported = btc.PrivateKey.fromWIF(exported);
 var hexa = privateKey.toString();
 // e.g. 'b9de6e778fe92aa7edb69395556f843f1dce0448350112e14906efc2a80fa61a'
 ```
@@ -68,7 +68,7 @@ var address = privateKey.toAddress();
 
 ```javascript
 // Build a 2-of-3 address from public keys
-var p2shAddress = new bitcore.Address([publicKey1, publicKey2, publicKey3], 2);
+var p2shAddress = new btc.Address([publicKey1, publicKey2, publicKey3], 2);
 ```
 
 ## Request a Payment
@@ -78,7 +78,7 @@ var paymentInfo = {
   address: '1DNtTk4PUCGAdiNETAzQFWZiy2fCHtGnPx',
   amount: 120000 //satoshis
 };
-var uri = new bitcore.URI(paymentInfo).toString();
+var uri = new btc.URI(paymentInfo).toString();
 ```
 
 ## Create a Transaction

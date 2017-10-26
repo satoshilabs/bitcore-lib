@@ -1,14 +1,13 @@
 'use strict';
 
-var buffer = require('buffer');
-
 var chai = require('chai');
 var should = chai.should();
-var bitcore = require('../../');
-var Script = bitcore.Script;
-var Transaction = bitcore.Transaction;
-var sighash = Transaction.sighash;
 
+var btcLib = require('../../');
+var buffer = require('buffer');
+var Script = btcLib.Script;
+var Transaction = btcLib.Transaction;
+var sighash = Transaction.sighash;
 var vectors_sighash = require('../data/sighash.json');
 
 describe('sighash', function() {

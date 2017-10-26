@@ -2,8 +2,10 @@
 
 var expect = require('chai').expect;
 var should = require('chai').should();
-var bitcore = require('..');
-var networks = bitcore.Networks;
+
+var btcLib = require('..');
+var Constants = require('../lib/common/constants');
+var networks = btcLib.Networks;
 
 describe('Networks', function() {
 
@@ -113,12 +115,12 @@ describe('Networks', function() {
   });
 
   it('converts to string using the "name" property', function() {
-    networks.livenet.toString().should.equal('livenet');
+    networks.livenet.toString().should.equal(Constants.LIVENET);
   });
 
   it('network object should be immutable', function() {
-    expect(networks.testnet.name).to.equal('testnet')
-    var fn = function() { networks.testnet.name = 'livenet' }
+    expect(networks.testnet.name).to.equal(Constants.TESTNET)
+    var fn = function() { networks.testnet.name = Constants.LIVENET }
     expect(fn).to.throw(TypeError)
   });
 

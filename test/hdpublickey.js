@@ -1,19 +1,23 @@
 'use strict';
 
 /* jshint unused: false */
-var _ = require('lodash');
+
 var assert = require('assert');
-var should = require('chai').should();
 var expect = require('chai').expect;
-var bitcore = require('..');
+var should = require('chai').should();
+
+var btcLib = require('..');
+var owsCommon = require('ows-common');
+var Base58Check = btcLib.encoding.Base58Check;
 var buffer = require('buffer');
-var errors = bitcore.errors;
-var hdErrors = bitcore.errors.HDPublicKey;
-var BufferUtil = bitcore.util.buffer;
-var HDPrivateKey = bitcore.HDPrivateKey;
-var HDPublicKey = bitcore.HDPublicKey;
-var Base58Check = bitcore.encoding.Base58Check;
-var Networks = bitcore.Networks;
+var BufferUtil = btcLib.util.buffer;
+var Constants = require('../lib/common/constants');
+var errors = owsCommon.errors;
+var hdErrors = btcLib.errors.HDPublicKey;
+var HDPrivateKey = btcLib.HDPrivateKey;
+var HDPublicKey = btcLib.HDPublicKey;
+var Networks = btcLib.Networks;
+var _ = require('lodash');
 
 var xprivkey = 'xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi';
 var xpubkey = 'xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8';
@@ -125,13 +129,13 @@ describe('HDPublicKey interface', function() {
       compareType(HDPublicKey.getSerializedError(1), hdErrors.UnrecognizedArgument);
     });
     it('if a network is provided, validates that data corresponds to it', function() {
-      compareType(HDPublicKey.getSerializedError(xpubkey, 'testnet'), errors.InvalidNetwork);
+      compareType(HDPublicKey.getSerializedError(xpubkey, Constants.TESTNET), errors.InvalidNetwork);
     });
     it('recognizes invalid network arguments', function() {
       compareType(HDPublicKey.getSerializedError(xpubkey, 'invalid'), errors.InvalidNetworkArgument);
     });
     it('recognizes a valid network', function() {
-      expect(HDPublicKey.getSerializedError(xpubkey, 'livenet')).to.equal(null);
+      expect(HDPublicKey.getSerializedError(xpubkey, Constants.LIVENET)).to.equal(null);
     });
   });
 
@@ -166,7 +170,7 @@ describe('HDPublicKey interface', function() {
 
   describe('conversion to different formats', function() {
     var plainObject = {
-      'network':'livenet',
+      'network':Constants.LIVENET,
       'depth':0,
       'fingerPrint':876747070,
       'parentFingerPrint':0,

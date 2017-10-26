@@ -1,5 +1,3 @@
-
-
-var bitcoreTasks = require('bitcore-build');
-
-bitcoreTasks('lib');
+'use strict';
+var owsTasks = require('ows-build');
+owsTasks('btc', 'lib');

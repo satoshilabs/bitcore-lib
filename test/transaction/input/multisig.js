@@ -1,17 +1,17 @@
 'use strict';
 /* jshint unused: false */
 
-var should = require('chai').should();
 var expect = require('chai').expect;
-var _ = require('lodash');
+var should = require('chai').should();
 
-var bitcore = require('../../..');
-var Transaction = bitcore.Transaction;
-var PrivateKey = bitcore.PrivateKey;
-var Address = bitcore.Address;
-var Script = bitcore.Script;
-var Signature = bitcore.crypto.Signature;
-var MultiSigInput = bitcore.Transaction.Input.MultiSig;
+var btcLib = require('../../..');
+var Address = btcLib.Address;
+var MultiSigInput = btcLib.Transaction.Input.MultiSig;
+var PrivateKey = btcLib.PrivateKey;
+var Script = btcLib.Script;
+var Signature = btcLib.crypto.Signature;
+var Transaction = btcLib.Transaction;
+var _ = require('lodash');
 
 describe('MultiSigInput', function() {
 
@@ -71,14 +71,14 @@ describe('MultiSigInput', function() {
       .to(address, 1000000);
     var input = transaction.inputs[0];
 
-    _.all(input.publicKeysWithoutSignature(), function(publicKeyMissing) {
+    _.every(input.publicKeysWithoutSignature(), function(publicKeyMissing) {
       var serialized = publicKeyMissing.toString();
       return serialized === public1.toString() ||
               serialized === public2.toString() ||
               serialized === public3.toString();
     }).should.equal(true);
     transaction.sign(privateKey1);
-    _.all(input.publicKeysWithoutSignature(), function(publicKeyMissing) {
+    _.every(input.publicKeysWithoutSignature(), function(publicKeyMissing) {
       var serialized = publicKeyMissing.toString();
       return serialized === public2.toString() ||
               serialized === public3.toString();

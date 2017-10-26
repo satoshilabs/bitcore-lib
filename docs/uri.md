@@ -10,7 +10,7 @@ bitcoin:12A1MyfXbW6RhdRAZEqofac5jCQQjwEPBu?amount=1.2&message=Payment&label=Sato
 ```
 
 ## URI Validation
-The main use that we expect you'll have for the `URI` class in bitcore is validating and parsing bitcoin URIs. A `URI` instance exposes the address as a bitcore `Address` object and the amount in Satoshis, if present.
+The main use that we expect you'll have for the `URI` class in btc is validating and parsing bitcoin URIs. A `URI` instance exposes the address as a btc `Address` object and the amount in Satoshis, if present.
 
 The code for validating URIs looks like this:
 

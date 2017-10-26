@@ -1,59 +1,62 @@
 'use strict';
 
-var bitcore = module.exports;
+var btcLib = {};
+var owsCommon = require('ows-common');
 
 // module information
-bitcore.version = 'v' + require('./package.json').version;
+btcLib.version = 'v' + require('./package.json').version;
 
 // crypto
-bitcore.crypto = {};
-bitcore.crypto.BN = require('./lib/crypto/bn');
-bitcore.crypto.ECDSA = require('./lib/crypto/ecdsa');
-bitcore.crypto.Hash = require('./lib/crypto/hash');
-bitcore.crypto.Random = require('./lib/crypto/random');
-bitcore.crypto.Point = require('./lib/crypto/point');
-bitcore.crypto.Signature = require('./lib/crypto/signature');
+btcLib.crypto = {};
+btcLib.crypto.BN = owsCommon.crypto.BN;
+btcLib.crypto.ECDSA = require('./lib/crypto/ecdsa');
+btcLib.crypto.Hash = owsCommon.crypto.Hash;
+btcLib.crypto.Random = owsCommon.crypto.Random;
+btcLib.crypto.Point = require('./lib/crypto/point');
+btcLib.crypto.Signature = require('./lib/crypto/signature');
 
 // encoding
-bitcore.encoding = {};
-bitcore.encoding.Base58 = require('./lib/encoding/base58');
-bitcore.encoding.Base58Check = require('./lib/encoding/base58check');
-bitcore.encoding.BufferReader = require('./lib/encoding/bufferreader');
-bitcore.encoding.BufferWriter = require('./lib/encoding/bufferwriter');
-bitcore.encoding.Varint = require('./lib/encoding/varint');
+btcLib.encoding = {};
+btcLib.encoding.Base58 = owsCommon.encoding.Base58;
+btcLib.encoding.Base58Check = owsCommon.encoding.Base58Check;
+btcLib.encoding.BufferReader = owsCommon.encoding.BufferReader;
+btcLib.encoding.BufferWriter = owsCommon.encoding.BufferWriter;
+btcLib.encoding.Varint = owsCommon.encoding.Varint;
 
 // utilities
-bitcore.util = {};
-bitcore.util.buffer = require('./lib/util/buffer');
-bitcore.util.js = require('./lib/util/js');
-bitcore.util.preconditions = require('./lib/util/preconditions');
+btcLib.util = {};
+btcLib.util.buffer = owsCommon.util.buffer;
+btcLib.util.js = owsCommon.util.js;
+btcLib.util.preconditions = owsCommon.util.preconditions;
 
 // errors thrown by the library
-bitcore.errors = require('./lib/errors');
+btcLib.errors = owsCommon.errors;
 
 // main bitcoin library
-bitcore.Address = require('./lib/address');
-bitcore.Block = require('./lib/block');
-bitcore.MerkleBlock = require('./lib/block/merkleblock');
-bitcore.BlockHeader = require('./lib/block/blockheader');
-bitcore.HDPrivateKey = require('./lib/hdprivatekey.js');
-bitcore.HDPublicKey = require('./lib/hdpublickey.js');
-bitcore.Networks = require('./lib/networks');
-bitcore.Opcode = require('./lib/opcode');
-bitcore.PrivateKey = require('./lib/privatekey');
-bitcore.PublicKey = require('./lib/publickey');
-bitcore.Script = require('./lib/script');
-bitcore.Transaction = require('./lib/transaction');
-bitcore.URI = require('./lib/uri');
-bitcore.Unit = require('./lib/unit');
+btcLib.Address = require('./lib/address');
+btcLib.Block = require('./lib/block');
+btcLib.MerkleBlock = require('./lib/block/merkleblock');
+btcLib.BlockHeader = require('./lib/block/blockheader');
+btcLib.HDPrivateKey = require('./lib/hdprivatekey.js');
+btcLib.HDPublicKey = require('./lib/hdpublickey.js');
+btcLib.Networks = require('./lib/networks');
+btcLib.Opcode = require('./lib/opcode');
+btcLib.PrivateKey = require('./lib/privatekey');
+btcLib.PublicKey = require('./lib/publickey');
+btcLib.Script = require('./lib/script');
+btcLib.Transaction = require('./lib/transaction');
+btcLib.URI = require('./lib/uri');
+btcLib.Unit = require('./lib/unit');
 
 // dependencies, subject to change
-bitcore.deps = {};
-bitcore.deps.bnjs = require('bn.js');
-bitcore.deps.bs58 = require('bs58');
-bitcore.deps.Buffer = Buffer;
-bitcore.deps.elliptic = require('elliptic');
-bitcore.deps._ = require('lodash');
+btcLib.deps = {};
+btcLib.deps.bnjs = require('bn.js');
+btcLib.deps.bs58 = require('bs58');
+btcLib.deps.Buffer = Buffer;
+btcLib.deps.elliptic = require('elliptic');
+btcLib.deps._ = require('lodash');
 
 // Internal usage, exposed for testing/advanced tweaking
-bitcore.Transaction.sighash = require('./lib/transaction/sighash');
+btcLib.Transaction.sighash = require('./lib/transaction/sighash');
+
+module.exports = btcLib;

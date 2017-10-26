@@ -1,11 +1,12 @@
 'use strict';
 
-var should = require('chai').should();
 var expect = require('chai').expect;
+var should = require('chai').should();
 
-var bitcore = require('..');
-var errors = bitcore.errors;
-var Unit = bitcore.Unit;
+var btcLib = require('..');
+var owsCommon = require('ows-common');
+var errors = owsCommon.errors;
+var Unit = btcLib.Unit;
 
 describe('Unit', function() {
 

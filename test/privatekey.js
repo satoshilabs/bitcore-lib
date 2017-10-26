@@ -4,15 +4,15 @@ var chai = require('chai');
 var should = chai.should();
 var expect = chai.expect;
 
-var bitcore = require('..');
-var BN = bitcore.crypto.BN;
-var Point = bitcore.crypto.Point;
-var PrivateKey = bitcore.PrivateKey;
-var Networks = bitcore.Networks;
-var Base58Check = bitcore.encoding.Base58Check;
-
-var validbase58 = require('./data/bitcoind/base58_keys_valid.json');
+var btcLib = require('..');
+var Base58Check = btcLib.encoding.Base58Check;
+var BN = btcLib.crypto.BN;
 var invalidbase58 = require('./data/bitcoind/base58_keys_invalid.json');
+var Networks = btcLib.Networks;
+var Point = btcLib.crypto.Point;
+var PrivateKey = btcLib.PrivateKey;
+var Constants = require('../lib/common/constants');
+var validbase58 = require('./data/bitcoind/base58_keys_valid.json');
 
 describe('PrivateKey', function() {
   var hex = '96c132224121b509b7d0a16245e957d9192609c5637c6228311287b1be21627a';
@@ -120,7 +120,7 @@ describe('PrivateKey', function() {
 
     it('should not be able to instantiate private key because of network mismatch', function() {
       expect(function() {
-        return new PrivateKey('L3T1s1TYP9oyhHpXgkyLoJFGniEgkv2Jhi138d7R2yJ9F4QdDU2m', 'testnet');
+        return new PrivateKey('L3T1s1TYP9oyhHpXgkyLoJFGniEgkv2Jhi138d7R2yJ9F4QdDU2m', Constants.TESTNET);
       }).to.throw('Private key network mismatch');
     });
 
@@ -142,7 +142,7 @@ describe('PrivateKey', function() {
 
     it('should not be able to instantiate private key WIF because of network mismatch', function() {
       expect(function(){
-        var a = new PrivateKey(wifNamecoin, 'testnet');
+        var a = new PrivateKey(wifNamecoin, Constants.TESTNET);
       }).to.throw('Invalid network');
     });
 
@@ -173,7 +173,7 @@ describe('PrivateKey', function() {
     });
 
     it('should create a livenet private key', function() {
-      var privkey = new PrivateKey(BN.fromBuffer(buf), 'livenet');
+      var privkey = new PrivateKey(BN.fromBuffer(buf), Constants.LIVENET);
       privkey.toWIF().should.equal(wifLivenet);
     });
 
@@ -204,14 +204,14 @@ describe('PrivateKey', function() {
       var json = JSON.stringify({
         bn: '96c132224121b509b7d0a16245e957d9192609c5637c6228311287b1be21627a',
         compressed: false,
-        network: 'livenet'
+        network: Constants.LIVENET
       });
       var key = PrivateKey.fromObject(JSON.parse(json));
       JSON.stringify(key).should.equal(json);
     });
 
     it('input json should correctly initialize network field', function() {
-      ['livenet', 'testnet', 'mainnet'].forEach(function (net) {
+      [Constants.LIVENET, Constants.TESTNET, Constants.LIVENET_ALIAS].forEach(function (net) {
         var pk = PrivateKey.fromObject({
           bn: '96c132224121b509b7d0a16245e957d9192609c5637c6228311287b1be21627a',
           compressed: false,
@@ -320,7 +320,7 @@ describe('PrivateKey', function() {
 
   describe('buffer serialization', function() {
     it('returns an expected value when creating a PrivateKey from a buffer', function() {
-      var privkey = new PrivateKey(BN.fromBuffer(buf), 'livenet');
+      var privkey = new PrivateKey(BN.fromBuffer(buf), Constants.LIVENET);
       privkey.toString().should.equal(buf.toString('hex'));
     });
 
@@ -349,7 +349,7 @@ describe('PrivateKey', function() {
     // TODO: enable for v1.0.0 when toBuffer is changed to always be 32 bytes long
     // it('should return buffer with length equal 32', function() {
     //   var bn = BN.fromBuffer(buf.slice(0, 31));
-    //   var privkey = new PrivateKey(bn, 'livenet');
+    //   var privkey = new PrivateKey(bn, Constants.LIVENET);
     //   var expected = Buffer.concat([ new Buffer([0]), buf.slice(0, 31) ]);
     //   privkey.toBuffer().toString('hex').should.equal(expected.toString('hex'));
     // });
@@ -358,7 +358,7 @@ describe('PrivateKey', function() {
   describe('#toBigNumber', function() {
     it('should output known BN', function() {
       var a = BN.fromBuffer(buf);
-      var privkey = new PrivateKey(a, 'livenet');
+      var privkey = new PrivateKey(a, Constants.LIVENET);
       var b = privkey.toBigNumber();
       b.toString('hex').should.equal(a.toString('hex'));
     });
@@ -430,14 +430,14 @@ describe('PrivateKey', function() {
 
     it('should convert this known PrivateKey to known PublicKey and preserve compressed=true', function() {
       var privwif = 'L3T1s1TYP9oyhHpXgkyLoJFGniEgkv2Jhi138d7R2yJ9F4QdDU2m';
-      var privkey = new PrivateKey(privwif, 'livenet');
+      var privkey = new PrivateKey(privwif, Constants.LIVENET);
       var pubkey = privkey.toPublicKey();
       pubkey.compressed.should.equal(true);
     });
 
     it('should convert this known PrivateKey to known PublicKey and preserve compressed=false', function() {
       var privwif = '92jJzK4tbURm1C7udQXxeCBvXHoHJstDXRxAMouPG1k1XUaXdsu';
-      var privkey = new PrivateKey(privwif, 'testnet');
+      var privkey = new PrivateKey(privwif, Constants.TESTNET);
       var pubkey = privkey.toPublicKey();
       pubkey.compressed.should.equal(false);
     });

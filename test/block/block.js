@@ -1,17 +1,18 @@
 'use strict';
 
-var bitcore = require('../..');
-var BN = require('../../lib/crypto/bn');
-var BufferReader = bitcore.encoding.BufferReader;
-var BufferWriter = bitcore.encoding.BufferWriter;
-var BlockHeader = bitcore.BlockHeader;
-var Block = bitcore.Block;
 var chai = require('chai');
-var fs = require('fs');
 var should = chai.should();
-var Transaction = bitcore.Transaction;
 
-// https://test-insight.bitpay.com/block/000000000b99b16390660d79fcc138d2ad0c89a0d044c4201a02bdf1f61ffa11
+var btcLib = require('../..');
+var BN = btcLib.crypto.BN;
+var BufferReader = btcLib.encoding.BufferReader;
+var BufferWriter = btcLib.encoding.BufferWriter;
+var BlockHeader = btcLib.BlockHeader;
+var Block = btcLib.Block;
+var fs = require('fs');
+var Transaction = btcLib.Transaction;
+
+// https://test-bex.openwalletstack.com/block/000000000b99b16390660d79fcc138d2ad0c89a0d044c4201a02bdf1f61ffa11
 var dataRawBlockBuffer = fs.readFileSync('test/data/blk86756-testnet.dat');
 var dataRawBlockBinary = fs.readFileSync('test/data/blk86756-testnet.dat', 'binary');
 var dataJson = fs.readFileSync('test/data/blk86756-testnet.json').toString();
