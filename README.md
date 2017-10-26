@@ -1,4 +1,4 @@
-BtcLib
+Btc Lib
 =======
 
 [![NPM Package](https://img.shields.io/npm/v/btc-lib.svg?style=flat-square)](https://www.npmjs.org/package/btc-lib)
