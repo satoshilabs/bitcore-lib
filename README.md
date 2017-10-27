@@ -7,10 +7,6 @@ Btc Lib
 
 A pure and powerful JavaScript Bitcoin library.
 
-## Attribution
-
-This repository was created by copy forking [bitcore-lib bce9b83](https://github.com/bitpay/bitcore-lib/commit/bce9b83f50c3ed5df2c1ab1d5fc164580666c6db).
-
 ## Principles
 
 Bitcoin is a powerful new peer-to-peer platform for the next generation of financial technology. The decentralized nature of the Bitcoin network allows for highly resilient bitcoin infrastructure, and the developer community needs reliable, open-source tools to implement bitcoin apps and services.
