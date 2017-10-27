@@ -16,8 +16,8 @@ You can also use a `bower.json` file to store the dependencies of your project:
   "version": "0.0.1",
   "license": "MIT",
   "dependencies": {
-    "btc-lib": "^0.13.7",
-    "btc-mnemonic": "^1.0.1"
+    "@owstack/btc-lib": "^0.13.7",
+    "@owstack/btc-mnemonic": "^1.0.1"
   }
 }
 ```
@@ -39,8 +39,8 @@ After this, you can include the bundled release versions in your HTML file:
 <body>
 
   <script type="text/javascript">
-    var btcLib = require('btc-lib');
-    var Mnemonic = require('btc-mnemonic');
+    var btcLib = require('@owstack/btc-lib');
+    var Mnemonic = require('@owstack/btc-mnemonic');
     // etc...
   </script>
 

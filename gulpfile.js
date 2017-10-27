@@ -1,3 +1,3 @@
 'use strict';
-var owsTasks = require('ows-build');
+var owsTasks = require('@owstack/ows-build');
 owsTasks('btc', 'lib');

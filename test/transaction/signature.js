@@ -5,7 +5,7 @@
 var expect = require('chai').expect;
 var should = require('chai').should();
 
-var owsCommon = require('ows-common');
+var owsCommon = require('@owstack/ows-common');
 var btcLib = require('../..');
 var errors = owsCommon.errors;
 var Script = btcLib.Script;

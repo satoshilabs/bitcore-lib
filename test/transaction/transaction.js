@@ -7,7 +7,7 @@ var should = require('chai').should();
 var sinon = require('sinon');
 
 var btcLib = require('../..');
-var owsCommon = require('ows-common');
+var owsCommon = require('@owstack/ows-common');
 var Address = btcLib.Address;
 var BN = btcLib.crypto.BN;
 var Constants = require('../../lib/common/constants');

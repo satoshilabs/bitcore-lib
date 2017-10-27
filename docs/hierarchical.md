@@ -10,7 +10,7 @@ An instance of a [PrivateKey](privatekey.md) that also contains information requ
 Sample usage:
 
 ```javascript
-var btcLib = require('btc-lib');
+var btcLib = require('@owstack/btc-lib');
 var HDPrivateKey = btc.HDPrivateKey;
 
 var hdPrivateKey = new HDPrivateKey();

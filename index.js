@@ -1,7 +1,7 @@
 'use strict';
 
 var btcLib = {};
-var owsCommon = require('ows-common');
+var owsCommon = require('@owstack/ows-common');
 
 // module information
 btcLib.version = 'v' + require('./package.json').version;

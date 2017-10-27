@@ -7,7 +7,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 
 var btcLib = require('..');
-var owsCommon = require('ows-common');
+var owsCommon = require('@owstack/ows-common');
 var Base58Check = btcLib.encoding.Base58Check;
 var buffer = require('buffer');
 var BufferUtil = btcLib.util.buffer;

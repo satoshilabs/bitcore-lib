@@ -6,7 +6,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 
 var btcLib = require('../..');
-var owsCommon = require('ows-common');
+var owsCommon = require('@owstack/ows-common');
 var BN = btcLib.crypto.BN;
 var BufferWriter = btcLib.encoding.BufferWriter;
 var BufferReader = btcLib.encoding.BufferReader;
