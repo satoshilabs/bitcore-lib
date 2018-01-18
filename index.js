@@ -1,69 +1,60 @@
 'use strict';
 
-var bitcore = module.exports;
+var owsCommon = require('@owstack/ows-common');
 
 // module information
-bitcore.version = 'v' + require('./package.json').version;
-bitcore.versionGuard = function(version) {
-  if (version !== undefined) {
-    var message = 'More than one instance of bitcore-lib found. ' +
-      'Please make sure to require bitcore-lib and check that submodules do' +
-      ' not also include their own bitcore-lib dependency.';
-    throw new Error(message);
-  }
-};
-bitcore.versionGuard(global._bitcore);
-global._bitcore = bitcore.version;
+module.exports.version = 'v' + require('./package.json').version;
 
 // crypto
-bitcore.crypto = {};
-bitcore.crypto.BN = require('./lib/crypto/bn');
-bitcore.crypto.ECDSA = require('./lib/crypto/ecdsa');
-bitcore.crypto.Hash = require('./lib/crypto/hash');
-bitcore.crypto.Random = require('./lib/crypto/random');
-bitcore.crypto.Point = require('./lib/crypto/point');
-bitcore.crypto.Signature = require('./lib/crypto/signature');
+module.exports.crypto = {};
+module.exports.crypto.BN = owsCommon.crypto.BN;
+module.exports.crypto.ECDSA = require('./lib/crypto/ecdsa');
+module.exports.crypto.Hash = owsCommon.crypto.Hash;
+module.exports.crypto.Random = owsCommon.crypto.Random;
+module.exports.crypto.Point = require('./lib/crypto/point');
+module.exports.crypto.Signature = require('./lib/crypto/signature');
 
 // encoding
-bitcore.encoding = {};
-bitcore.encoding.Base58 = require('./lib/encoding/base58');
-bitcore.encoding.Base58Check = require('./lib/encoding/base58check');
-bitcore.encoding.BufferReader = require('./lib/encoding/bufferreader');
-bitcore.encoding.BufferWriter = require('./lib/encoding/bufferwriter');
-bitcore.encoding.Varint = require('./lib/encoding/varint');
+module.exports.encoding = {};
+module.exports.encoding.Base58 = owsCommon.encoding.Base58;
+module.exports.encoding.Base58Check = owsCommon.encoding.Base58Check;
+module.exports.encoding.BufferReader = owsCommon.encoding.BufferReader;
+module.exports.encoding.BufferWriter = owsCommon.encoding.BufferWriter;
+module.exports.encoding.Varint = owsCommon.encoding.Varint;
 
 // utilities
-bitcore.util = {};
-bitcore.util.buffer = require('./lib/util/buffer');
-bitcore.util.js = require('./lib/util/js');
-bitcore.util.preconditions = require('./lib/util/preconditions');
+module.exports.util = {};
+module.exports.util.buffer = owsCommon.util.buffer;
+module.exports.util.js = owsCommon.util.js;
+module.exports.util.preconditions = owsCommon.util.preconditions;
 
 // errors thrown by the library
-bitcore.errors = require('./lib/errors');
+module.exports.errors = owsCommon.errors;
 
 // main bitcoin library
-bitcore.Address = require('./lib/address');
-bitcore.Block = require('./lib/block');
-bitcore.MerkleBlock = require('./lib/block/merkleblock');
-bitcore.BlockHeader = require('./lib/block/blockheader');
-bitcore.HDPrivateKey = require('./lib/hdprivatekey.js');
-bitcore.HDPublicKey = require('./lib/hdpublickey.js');
-bitcore.Networks = require('./lib/networks');
-bitcore.Opcode = require('./lib/opcode');
-bitcore.PrivateKey = require('./lib/privatekey');
-bitcore.PublicKey = require('./lib/publickey');
-bitcore.Script = require('./lib/script');
-bitcore.Transaction = require('./lib/transaction');
-bitcore.URI = require('./lib/uri');
-bitcore.Unit = require('./lib/unit');
+module.exports.Address = require('./lib/address');
+module.exports.Block = require('./lib/block');
+module.exports.Constants = require('./lib/common/constants');
+module.exports.MerkleBlock = require('./lib/block/merkleblock');
+module.exports.BlockHeader = require('./lib/block/blockheader');
+module.exports.HDPrivateKey = require('./lib/hdprivatekey.js');
+module.exports.HDPublicKey = require('./lib/hdpublickey.js');
+module.exports.Networks = require('./lib/networks');
+module.exports.Opcode = require('./lib/opcode');
+module.exports.PrivateKey = require('./lib/privatekey');
+module.exports.PublicKey = require('./lib/publickey');
+module.exports.Script = require('./lib/script');
+module.exports.Transaction = require('./lib/transaction');
+module.exports.URI = require('./lib/uri');
+module.exports.Unit = require('./lib/unit');
 
 // dependencies, subject to change
-bitcore.deps = {};
-bitcore.deps.bnjs = require('bn.js');
-bitcore.deps.bs58 = require('bs58');
-bitcore.deps.Buffer = Buffer;
-bitcore.deps.elliptic = require('elliptic');
-bitcore.deps._ = require('lodash');
+module.exports.deps = {};
+module.exports.deps.bnjs = owsCommon.deps.bnjs;
+module.exports.deps.bs58 = owsCommon.deps.bs58;
+module.exports.deps.Buffer = owsCommon.deps.Buffer;
+module.exports.deps.elliptic = require('elliptic');
+module.exports.deps._ = owsCommon.deps._;
 
 // Internal usage, exposed for testing/advanced tweaking
-bitcore.Transaction.sighash = require('./lib/transaction/sighash');
+module.exports.Transaction.sighash = require('./lib/transaction/sighash');

@@ -2,16 +2,17 @@
 
 /* jshint unused: false */
 /* jshint latedef: false */
-var should = require('chai').should();
 var expect = require('chai').expect;
-var _ = require('lodash');
+var should = require('chai').should();
 
-var bitcore = require('../..');
-var Transaction = bitcore.Transaction;
-var TransactionSignature = bitcore.Transaction.Signature;
-var Script = bitcore.Script;
-var PrivateKey = bitcore.PrivateKey;
-var errors = bitcore.errors;
+var owsCommon = require('@owstack/ows-common');
+var btcLib = require('../..');
+var errors = owsCommon.errors;
+var Script = btcLib.Script;
+var PrivateKey = btcLib.PrivateKey;
+var Transaction = btcLib.Transaction;
+var TransactionSignature = btcLib.Transaction.Signature;
+var _ = require('lodash');
 
 describe('TransactionSignature', function() {
 

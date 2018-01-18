@@ -1,12 +1,12 @@
 'use strict';
 
-var _ = require('lodash');
 var chai = require('chai');
-var should = chai.should();
 var expect = chai.expect;
+var should = chai.should();
 
-var bitcore = require('../..');
-var UnspentOutput = bitcore.Transaction.UnspentOutput;
+var btcLib = require('../..');
+var UnspentOutput = btcLib.Transaction.UnspentOutput;
+var _ = require('lodash');
 
 describe('UnspentOutput', function() {
 

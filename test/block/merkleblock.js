@@ -2,14 +2,13 @@
 
 var should = require('chai').should();
 
-var bitcore = require('../..');
-var MerkleBlock = bitcore.MerkleBlock;
-var BufferReader = bitcore.encoding.BufferReader;
-var BufferWriter = bitcore.encoding.BufferWriter;
-var Transaction = bitcore.Transaction;
+var btcLib = require('../..');
+var BufferReader = btcLib.encoding.BufferReader;
+var BufferWriter = btcLib.encoding.BufferWriter;
 var data = require('../data/merkleblocks.js');
+var MerkleBlock = btcLib.MerkleBlock;
+var Transaction = btcLib.Transaction;
 var transactionVector = require('../data/tx_creation');
-
 
 describe('MerkleBlock', function() {
   var blockhex  = data.HEX[0];

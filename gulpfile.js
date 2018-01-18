@@ -1,5 +1,2 @@
-
-
-var bitcoreTasks = require('bitcore-build');
-
-bitcoreTasks('lib');
+var owsTasks = require('@owstack/ows-build');
+owsTasks('btc', 'lib');

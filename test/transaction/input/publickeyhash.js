@@ -1,17 +1,17 @@
 'use strict';
 /* jshint unused: false */
 
-var should = require('chai').should();
 var expect = require('chai').expect;
-var _ = require('lodash');
+var should = require('chai').should();
 
-var bitcore = require('../../..');
-var Transaction = bitcore.Transaction;
-var PrivateKey = bitcore.PrivateKey;
-var Address = bitcore.Address;
-var Script = bitcore.Script;
-var Networks = bitcore.Networks;
-var Signature = bitcore.crypto.Signature;
+var btcLib = require('../../..');
+var Address = btcLib.Address;
+var PrivateKey = btcLib.PrivateKey;
+var Networks = btcLib.Networks;
+var Script = btcLib.Script;
+var Signature = btcLib.crypto.Signature;
+var Transaction = btcLib.Transaction;
+var _ = require('lodash');
 
 describe('PublicKeyHashInput', function() {
 

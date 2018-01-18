@@ -2,21 +2,20 @@
 
 /* jshint unused: false */
 /* jshint latedef: false */
-var should = require('chai').should();
 var expect = require('chai').expect;
+var should = require('chai').should();
+
+var btcLib = require('../..');
+var owsCommon = require('@owstack/ows-common');
+var BN = btcLib.crypto.BN;
+var BufferWriter = btcLib.encoding.BufferWriter;
+var BufferReader = btcLib.encoding.BufferReader;
+var errors = owsCommon.errors;
+var Output = btcLib.Transaction.Output;
+var Script = btcLib.Script;
 var _ = require('lodash');
 
-var bitcore = require('../..');
-var BN = bitcore.crypto.BN;
-var BufferWriter = bitcore.encoding.BufferWriter;
-var BufferReader = bitcore.encoding.BufferReader;
-var Output = bitcore.Transaction.Output;
-var Script = bitcore.Script;
-
-var errors = bitcore.errors;
-
 describe('Output', function() {
-
   var output = new Output({
     satoshis: 0,
     script: Script.empty()
@@ -25,7 +24,7 @@ describe('Output', function() {
   it('throws error with unrecognized argument', function() {
     (function() {
       var out = new Output(12345);
-    }).should.throw(TypeError);
+    }.should.throw(TypeError));
   });
 
   it('can be assigned a satoshi amount in big number', function() {
@@ -51,7 +50,7 @@ describe('Output', function() {
           satoshis: -100,
           script: Script.empty()
         });
-      }).should.throw('Output satoshis is not a natural number');
+      }.should.throw('Output satoshis is not a natural number'));
     });
 
     it('1.1', function() {
@@ -60,7 +59,7 @@ describe('Output', function() {
           satoshis: 1.1,
           script: Script.empty()
         });
-      }).should.throw('Output satoshis is not a natural number');
+      }.should.throw('Output satoshis is not a natural number'));
     });
 
     it('NaN', function() {
@@ -69,7 +68,7 @@ describe('Output', function() {
           satoshis: NaN,
           script: Script.empty()
         });
-      }).should.throw('Output satoshis is not a natural number');
+      }.should.throw('Output satoshis is not a natural number'));
     });
 
     it('Infinity', function() {
@@ -78,7 +77,7 @@ describe('Output', function() {
           satoshis: Infinity,
           script: Script.empty()
         });
-      }).should.throw('Output satoshis is not a natural number');
+      }.should.throw('Output satoshis is not a natural number'));
     });
   });
 
@@ -90,7 +89,9 @@ describe('Output', function() {
   it('deserializes correctly a simple output', function() {
     var writer = new BufferWriter();
     output.toBufferWriter(writer);
-    var deserialized = Output.fromBufferReader(new BufferReader(writer.toBuffer()));
+    var deserialized = Output.fromBufferReader(
+      new BufferReader(writer.toBuffer())
+    );
     expectEqualOutputs(output, deserialized);
   });
 
@@ -111,16 +112,23 @@ describe('Output', function() {
 
   var output2 = new Output({
     satoshis: 1100000000,
-    script: new Script('OP_2 21 0x038282263212c609d9ea2a6e3e172de238d8c39' +
-      'cabd5ac1ca10646e23fd5f51508 21 0x038282263212c609d9ea2a6e3e172de23' +
-      '8d8c39cabd5ac1ca10646e23fd5f51508 OP_2 OP_CHECKMULTISIG OP_EQUAL')
+    script: new Script(
+      'OP_2 21 0x038282263212c609d9ea2a6e3e172de238d8c39' +
+        'cabd5ac1ca10646e23fd5f51508 21 0x038282263212c609d9ea2a6e3e172de23' +
+        '8d8c39cabd5ac1ca10646e23fd5f51508 OP_2 OP_CHECKMULTISIG OP_EQUAL'
+    )
   });
 
   it('toBufferWriter', function() {
-    output2.toBufferWriter().toBuffer().toString('hex')
-      .should.equal('00ab904100000000485215038282263212c609d9ea2a6e3e172de2' +
-        '38d8c39cabd5ac1ca10646e23fd5f5150815038282263212c609d9ea2a6e3e172d' +
-        'e238d8c39cabd5ac1ca10646e23fd5f5150852ae87');
+    output2
+      .toBufferWriter()
+      .toBuffer()
+      .toString('hex')
+      .should.equal(
+        '00ab904100000000485215038282263212c609d9ea2a6e3e172de2' +
+          '38d8c39cabd5ac1ca10646e23fd5f5150815038282263212c609d9ea2a6e3e172d' +
+          'e238d8c39cabd5ac1ca10646e23fd5f5150852ae87'
+      );
   });
 
   it('roundtrips to/from object', function() {
@@ -136,8 +144,10 @@ describe('Output', function() {
     // block 000000000000000b7e48f88e86ceee3e97b4df7c139f5411d14735c1b3c36791 (livenet)
     // transaction index 2
     // txid ebc9fa1196a59e192352d76c0f6e73167046b9d37b8302b6bb6968dfd279b767
-    var transaction = bitcore.Transaction();
-    transaction.fromString('01000000019ac03d5ae6a875d970128ef9086cef276a1919684a6988023cc7254691d97e6d010000006b4830450221009d41dc793ba24e65f571473d40b299b6459087cea1509f0d381740b1ac863cb6022039c425906fcaf51b2b84d8092569fb3213de43abaff2180e2a799d4fcb4dd0aa012102d5ede09a8ae667d0f855ef90325e27f6ce35bbe60a1e6e87af7f5b3c652140fdffffffff080100000000000000010101000000000000000202010100000000000000014c0100000000000000034c02010100000000000000014d0100000000000000044dffff010100000000000000014e0100000000000000064effffffff0100000000');
+    var transaction = btcLib.Transaction();
+    transaction.fromString(
+      '01000000019ac03d5ae6a875d970128ef9086cef276a1919684a6988023cc7254691d97e6d010000006b4830450221009d41dc793ba24e65f571473d40b299b6459087cea1509f0d381740b1ac863cb6022039c425906fcaf51b2b84d8092569fb3213de43abaff2180e2a799d4fcb4dd0aa012102d5ede09a8ae667d0f855ef90325e27f6ce35bbe60a1e6e87af7f5b3c652140fdffffffff080100000000000000010101000000000000000202010100000000000000014c0100000000000000034c02010100000000000000014d0100000000000000044dffff010100000000000000014e0100000000000000064effffffff0100000000'
+    );
     var obj = transaction.toObject();
     obj.outputs[2].script.should.equal('4c');
     obj.outputs[4].script.should.equal('4d');
@@ -146,7 +156,7 @@ describe('Output', function() {
 
   it('#toObject roundtrip will handle an invalid (null) script', function() {
     var invalidOutputScript = new Buffer('0100000000000000014c', 'hex');
-    var br = new bitcore.encoding.BufferReader(invalidOutputScript);
+    var br = new btcLib.encoding.BufferReader(invalidOutputScript);
     var output = Output.fromBufferReader(br);
     var output2 = new Output(output.toObject());
     should.equal(output2.script, null);
@@ -155,7 +165,7 @@ describe('Output', function() {
 
   it('inspect will work with an invalid (null) script', function() {
     var invalidOutputScript = new Buffer('0100000000000000014c', 'hex');
-    var br = new bitcore.encoding.BufferReader(invalidOutputScript);
+    var br = new btcLib.encoding.BufferReader(invalidOutputScript);
     var output = Output.fromBufferReader(br);
     output.inspect().should.equal('<Output (1 sats) 4c>');
   });
@@ -178,15 +188,4 @@ describe('Output', function() {
     });
     should.equal(output.script, null);
   });
-
-  it('should throw an error if Script throws an error that is not InvalidBuffer', function() {
-    var output = Output({
-      satoshis: 1000,
-      script: new Script()
-    });
-    (function() {
-      output.setScriptFromBuffer('bad');
-    }).should.throw('Invalid hex string');
-  });
-
 });
