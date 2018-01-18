@@ -1,11 +1,15 @@
-Btc Lib
+BTC Lib
 =======
 
-[![NPM Package](https://img.shields.io/npm/v/btc-lib.svg?style=flat-square)](https://www.npmjs.org/package/btc-lib)
+[![NPM Package](https://img.shields.io/npm/v/@owstack/btc-lib.svg?style=flat-square)](https://www.npmjs.org/package/@owstack/btc-lib)
 [![Build Status](https://img.shields.io/travis/owstack/btc-lib.svg?branch=master&style=flat-square)](https://travis-ci.org/owstack/btc-lib)
 [![Coverage Status](https://img.shields.io/coveralls/owstack/btc-lib.svg?style=flat-square)](https://coveralls.io/r/owstack/btc-lib)
 
 A pure and powerful JavaScript Bitcoin library.
+
+## What this provides
+
+This repository extends @owstack/satoshi-common-lib with segwit fork changes
 
 ## Principles
 
@@ -20,15 +24,6 @@ npm install btc-lib
 ```
 bower install btc-lib
 ```
-
-## Documentation
-
-The complete docs are hosted here: [btcLib documentation](http://btc.io/guide/). There's also a [btcLib API reference](http://btc.io/api/) available generated from the JSDocs of the project, where you'll find low-level details on each btcLib utility.
-
-- [Read the Developer Guide](http://btcLib.io/guide/)
-- [Read the API Reference](http://btcLib.io/api/)
-
-To get community assistance and ask for help with implementation questions, please use our [community forums](https://forum.btcLib.io/).
 
 ## Examples
 
@@ -91,4 +86,4 @@ or create a test coverage report (you can open `coverage/lcov-report/index.html`
 
 Code released under [the MIT license](https://github.com/owstack/btc-lib/blob/master/LICENSE).
 
-Copyright 2017 Open Wallet Stack. Btccore is a trademark maintained by Open Wallet Stack.
+Copyright 2017 Open Wallet Stack.

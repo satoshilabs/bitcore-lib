@@ -10,7 +10,6 @@ var MerkleBlock = btcLib.MerkleBlock;
 var Transaction = btcLib.Transaction;
 var transactionVector = require('../data/tx_creation');
 
-
 describe('MerkleBlock', function() {
   var blockhex  = data.HEX[0];
   var blockbuf  = new Buffer(blockhex,'hex');

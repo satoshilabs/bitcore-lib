@@ -1,4 +1,4 @@
-# BtcLib v0.0.1
+# BtcLib v0.1.0
 
 ## Principles
 
